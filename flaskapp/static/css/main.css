@@ -209,3 +209,8 @@ input[type="checkbox"]:disabled + .switch-handle
 input::-moz-focus-inner, input::-moz-focus-outer {
   border: 0;
 }
+
+.hust-logo{
+    height: 40px;
+    width: auto;
+}
