@@ -21,7 +21,7 @@ def login():
           return redirect(url_for('dashboard'))
         else:
           flash('Login Unsuccessful. Please check username and password', 'danger')
-  return render_template('login.html', title='Login', form=form)
+  return render_template('login.html', title='Đăng nhập', form=form)
 
 # logout
 @app.route("/logout")
@@ -36,14 +36,14 @@ def dashboard():
   if not session.get('logged_in'):
     return redirect(url_for('login'))
   else:
-    return render_template('dashboard.html', title='Dashboard', active='dashboard')
+    return render_template('dashboard.html', title='Bảng điều khiển', active='dashboard')
 
 @app.route("/graph")
 def graph():
   if not session.get('logged_in'):
     return redirect(url_for('login'))
   else:
-    return render_template('graph.html', title='Graph', active='graph')
+    return render_template('graph.html', title='Đồ thị', active='graph')
 
 # api routes
 @app.route("/api/getData", methods=['POST', 'GET'])
