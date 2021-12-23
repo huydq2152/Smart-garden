@@ -1,4 +1,3 @@
-# Import SDK packages
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
@@ -18,11 +17,9 @@ def customCallback(client, userdata, message):
 
 # https://s3.amazonaws.com/aws-iot-device-sdk-python-docs/sphinx/html/index.html
 host = "a290uc2ksy4m1j-ats.iot.us-west-2.amazonaws.com"
-
-# 3 cái tiếp theo là đường dẫn đến các tệp tương ứng trong rpi
-rootCAPath = "rootca.pem"
-certificatePath = "certificate.pem.crt"
-privateKeyPath = "private.pem.key"
+rootCAPath = "/home/pi/Templates/Project/smartgarden/rootca.pem"
+certificatePath = "/home/pi/Templates/Project/smartgarden/certificate.pem.crt"
+privateKeyPath = "/home/pi/Templates/Project/smartgarden/private.pem.key"
 
 my_rpi = AWSIoTMQTTClient("basicPubSub")
 my_rpi.configureEndpoint(host, 8883)
@@ -47,7 +44,6 @@ while True:
   response = table.query(KeyConditionExpression=Key('id').eq('id_status'),
       ScanIndexForward=False
   )
-  #ScanIndexForward : chỉ định thứ tự duyệt ( false : giảm dần )
 
   items = response['Items']
 
