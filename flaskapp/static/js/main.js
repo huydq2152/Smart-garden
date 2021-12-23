@@ -8,7 +8,7 @@ function getStatus() {
     type: "POST",
     success: function (ndata) {
       // console.log(ndata[0].status);
-      status = ndata[0].status;
+      let status = ndata[0].status;
       if (status == "A") {
         autoSwitch.checked = true;
         manualSwitch.disabled = true;
