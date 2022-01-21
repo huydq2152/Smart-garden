@@ -119,3 +119,42 @@ def send_status(status):
 		import sys
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])
+
+def get_testStatus():
+	try:
+		dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
+		table = dynamodb.Table('SmartGarden_testStatus')
+
+		startdate = date.today().isoformat()
+		response = table.query(KeyConditionExpression=Key('id').eq('id_status') & Key('datetimeid').begins_with(startdate),
+				ScanIndexForward=False
+		)
+
+		items = response['Items']
+
+		n=1
+		data = items[:n]
+		return data
+	except:
+		import sys
+		print(sys.exc_info()[0])
+		print(sys.exc_info()[1])
+
+def send_testStatus(testStatus):
+	try:
+		# print("testStatus", testStatus)
+		dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
+		table = dynamodb.Table('SmartGarden_testStatus')
+
+		now = dt.datetime.now()
+		new_item = {
+			"id": "id_status",
+			'datetimeid': now.isoformat(),
+			'testStatus': testStatus
+		}
+		table.put_item(Item = new_item)
+
+	except:
+		import sys
+		print(sys.exc_info()[0])
+		print(sys.exc_info()[1])

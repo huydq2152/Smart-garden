@@ -1,6 +1,7 @@
 ///////////////////////// Automated Watering /////////////////////////
 const autoSwitch = document.getElementById("autoSwitch");
 const manualSwitch = document.getElementById("manualSwitch");
+const runTestSwitch = document.getElementById("runTest");
 
 function getStatus() {
   jQuery.ajax({
@@ -23,6 +24,22 @@ function getStatus() {
         autoSwitch.checked = true;
         manualSwitch.disabled = true;
         manualSwitch.checked = false;
+      }
+    }
+  })
+}
+
+function getTestStatus() {
+  jQuery.ajax({
+    url: "/api/testStatus",
+    type: "POST",
+    success: function (ndata) {
+      console.log(ndata[0].testStatus);
+      let testStatus = ndata[0].testStatus;
+      if (testStatus == "Y") {
+        runTestSwitch.checked = true;
+      } else {
+        runTestSwitch.checked = false;
       }
     }
   })
@@ -58,6 +75,20 @@ function manual() {
     url: "changeStatus/" + manualStatus
   })
 }
+
+function runTest() {
+  let run;
+  if (runTestSwitch.checked) {
+    run = "Y";
+  } else {
+    run = "N";
+  }
+  // console.log("run = ",run);
+  $.ajax({
+    url: "runTest/" + run
+  })
+}
+
 
 ///////////////////////// Get readings /////////////////////////
 function getData() {
@@ -172,6 +203,7 @@ $(document).ready(function () {
   getData();
   getTestData();
   getStatus();
+  getTestStatus();
   getChartData();
 
   setInterval(function () {
