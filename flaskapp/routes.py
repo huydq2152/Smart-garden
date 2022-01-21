@@ -3,6 +3,7 @@ import dynamodb
 import jsonconverter as jsonc
 import sys
 
+import scripts
 from flaskapp.forms import LoginForm
 from flaskapp import app
 
@@ -119,3 +120,41 @@ def api_getTestData():
       print(sys.exc_info()[1])
       return None
 
+@app.route("/runTest/<run>")
+def runTest(run):
+  if run == 'Y':
+    try:
+      dynamodb.send_testStatus(run)
+      scripts.runTest()
+
+      return run
+    except:
+      print(sys.exc_info()[0])
+      print(sys.exc_info()[1])
+      return None
+  elif run == 'N':
+    try:
+      dynamodb.send_testStatus(run)
+      scripts.endTest()
+
+      return run
+    except:
+      print(sys.exc_info()[0])
+      print(sys.exc_info()[1])
+      return None
+
+@app.route("/api/testStatus", methods=['GET', 'POST'])
+def testStatus():
+  try:
+    data = jsonc.data_to_json(dynamodb.get_testStatus())
+    loaded_data = jsonc.json.loads(data)
+    # print(loaded_data)
+    return jsonify(loaded_data)
+
+    testStatus = loaded_data[0].testStatus
+
+    return testStatus
+  except:
+    print(sys.exc_info()[0])
+    print(sys.exc_info()[1])
+    return None

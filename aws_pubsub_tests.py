@@ -13,9 +13,9 @@ def customCallback(client, userdata, message):
 
 host = "a290uc2ksy4m1j-ats.iot.us-west-2.amazonaws.com"
 
-rootCAPath = "D:/SmartGarden/Huy/garden/smartgarden/rootca.pem"
-certificatePath = "D:/SmartGarden/Huy/garden/smartgarden/certificate.pem.crt"
-privateKeyPath = "D:/SmartGarden/Huy/garden/smartgarden/private.pem.key"
+rootCAPath = "/home/pi/Templates/Project/smartgarden/rootca.pem"
+certificatePath = "/home/pi/Templates/Project/smartgarden/certificate.pem.crt"
+privateKeyPath = "/home/pi/Templates/Project/smartgarden/private.pem.key"
 
 my_rpi = AWSIoTMQTTClient("basicPubSub")
 my_rpi.configureEndpoint(host, 8883)
