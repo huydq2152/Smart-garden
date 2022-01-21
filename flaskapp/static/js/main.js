@@ -79,6 +79,30 @@ function getData() {
   })
 }
 
+///////////////////////// Get testData /////////////////////////
+function getTestData() {
+  jQuery.ajax({
+    url: "/api/getTestData",
+    type: "POST",
+    success: function (ndata) {
+      console.log(ndata);
+      test1 = ndata[0].test1;
+      test2 = ndata[0].test2;
+      test3 = ndata[0].test3;
+      test4 = ndata[0].test4;
+      test5 = ndata[0].test5;
+      test6 = ndata[0].test6;
+
+      $('#test1').html(test1);
+      $('#test2').html(test2);
+      $('#test3').html(test3);
+      $('#test4').html(test4);
+      $('#test5').html(test5);
+      $('#test6').html(test6);
+    }
+  })
+}
+
 /////////////////////// Get Chart data ///////////////////////
 function getChartData() {
   jQuery.ajax({
@@ -146,11 +170,13 @@ function createGraph(data, newTime, newChart) {
 /////////////////////// run functions ///////////////////////
 $(document).ready(function () {
   getData();
+  getTestData();
   getStatus();
   getChartData();
 
   setInterval(function () {
     getData();
+    getTestData();
     getChartData();
   }, 5000);
 })

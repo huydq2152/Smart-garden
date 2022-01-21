@@ -38,10 +38,19 @@
                     <p>Đồ thị</p>
                 </a>
                 </li>
+                {% if active == 'test' %}
+                    <li class="active">
+                        {% else %}
+                    <li>
+                {% endif %}
+                <a href="{{ url_for('test') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <p>Test</p>
+                </a>
+                </li>
             </ul>
         </div>
     </div>
-
 
     <div class="main-panel">
         <nav class="navbar navbar-default">
@@ -57,6 +66,8 @@
                         <a class="navbar-brand" href="{{ url_for('dashboard') }}">Bảng điều khiển</a>
                     {% elif active == 'graph' %}
                         <a class="navbar-brand" href="{{ url_for('graph') }}">Đồ thị</a>
+                    {% elif active == 'test' %}
+                        <a class="navbar-brand" href="{{ url_for('test') }}">Test</a>
                     {% endif %}
                 </div>
                 <div class="collapse navbar-collapse">

@@ -45,6 +45,13 @@ def graph():
   else:
     return render_template('graph.html', title='Đồ thị', active='graph')
 
+@app.route("/test")
+def test():
+  if not session.get('logged_in'):
+    return redirect(url_for('login'))
+  else:
+    return render_template('test.html', title='Test', active='test')
+
 # api routes
 @app.route("/api/getData", methods=['POST', 'GET'])
 def api_getData():
@@ -98,4 +105,17 @@ def changeStatus(status):
     print(sys.exc_info()[0])
     print(sys.exc_info()[1])
     return None
+
+@app.route("/api/getTestData", methods=['POST', 'GET'])
+def api_getTestData():
+  if request.method == 'POST':
+    try:
+      data = jsonc.data_to_json(dynamodb.get_test_data())
+      loaded_data = jsonc.json.loads(data)
+      # print(loaded_data)
+      return jsonify(loaded_data)
+    except:
+      print(sys.exc_info()[0])
+      print(sys.exc_info()[1])
+      return None
 

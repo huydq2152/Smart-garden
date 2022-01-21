@@ -38,6 +38,27 @@ def get_data():
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])
 
+def get_test_data():
+	try:
+		dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
+		table = dynamodb.Table('Smartgarden_tests')
+
+		startdate = date.today().isoformat()
+		response = table.query(KeyConditionExpression=Key('id').eq('id_smartgarden') & Key('datetimeid').begins_with(startdate),
+				ScanIndexForward=False
+		)
+
+		items = response['Items']
+
+		n=1 # get latest data
+		data = items[:n]
+		print(data)
+		return data
+	except:
+		import sys
+		print(sys.exc_info()[0])
+		print(sys.exc_info()[1])
+
 def get_chart_data():
 	try:
 
