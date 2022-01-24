@@ -6,7 +6,6 @@ const runTestSwitch = document.getElementById("runTest");
 const addTestDeviceBtn = $('#addTestDeviceBtn');
 addTestDeviceBtn.click(function () {
     addTestDevice();
-    window.location = window.location.href;
 })
 
 function addTestDevice() {
