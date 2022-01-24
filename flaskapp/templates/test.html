@@ -1,125 +1,34 @@
 {% extends "navbar.html" %}
 {% block content %}
-<div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test1</p>
-                  <span id="test1"></span>
-                </div>
-              </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row" style="margin-bottom: 30px;padding-left: 15px;">
+                <button id="addTestDeviceBtn" type="button" class="btn btn-primary">Thêm thiết bị</button>
+                <button id="deleteTestDeviceBtn" type="button" class="btn btn-primary">Xóa thiết bị</button>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
             <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test2</p>
-                  <span id="test2"></span>
-                </div>
-              </div>
+                {% for i in range(1, deviceCount) %}
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-laptop-code"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="numbers">
+                                            <p>{{ lst_device_name[i] }}</p>
+                                            <span id={{ lst_device_name[i] }}></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test3</p>
-                  <span id="test3"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test4</p>
-                  <span id="test4"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-        <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test5</p>
-                  <span id="test5"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-        <div class="col-lg-4 col-sm-6">
-        <div class="card">
-          <div class="content">
-            <div class="row">
-              <div class="col-xs-3">
-                <div class="icon-big text-center">
-                  <i class="fas fa-laptop-code"></i>
-                </div>
-              </div>
-              <div class="col-xs-9">
-                <div class="numbers">
-                  <p>Test6</p>
-                  <span id="test6"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock content %}
