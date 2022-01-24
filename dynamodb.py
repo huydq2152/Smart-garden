@@ -158,3 +158,38 @@ def send_testStatus(testStatus):
 		import sys
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])
+
+def get_deviceCount():
+	try:
+		dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
+		table = dynamodb.Table('SmartGarden_deviceCount')
+
+		response = table.query(KeyConditionExpression=Key('id').eq('id_deviceCount'),
+				ScanIndexForward=False
+		)
+
+		items = response['Items']
+
+		n=1
+		data = items[:n]
+		return data
+	except:
+		import sys
+		print(sys.exc_info()[0])
+		print(sys.exc_info()[1])
+
+def send_deviceCount(deviceCount):
+	try:
+		dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
+		table = dynamodb.Table('SmartGarden_deviceCount')
+
+		new_item = {
+			"id": "id_deviceCount",
+			'deviceCount': deviceCount
+		}
+		table.put_item(Item = new_item)
+
+	except:
+		import sys
+		print(sys.exc_info()[0])
+		print(sys.exc_info()[1])

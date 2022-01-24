@@ -1,4 +1,5 @@
 from flask import render_template, url_for, redirect, request, Response, jsonify, session, flash
+
 import dynamodb
 import jsonconverter as jsonc
 import sys
@@ -51,7 +52,19 @@ def test():
   if not session.get('logged_in'):
     return redirect(url_for('login'))
   else:
-    return render_template('test.html', title='Test', active='test')
+    deviceData = jsonc.data_to_json(dynamodb.get_deviceCount())
+    loaded_deviceData = jsonc.json.loads(deviceData)
+
+    deviceCountStr = loaded_deviceData[0]['deviceCount']
+    deviceCount = int(deviceCountStr)
+
+    i = 1
+    lst_device_name = [""]
+    while i <= deviceCount:
+        lst_device_name.append(f'test{i}')
+        i += 1
+
+    return render_template('test.html', title='Test', active='test', deviceCount=deviceCount, lst_device_name=lst_device_name)
 
 # api routes
 @app.route("/api/getData", methods=['POST', 'GET'])
@@ -102,7 +115,7 @@ def changeStatus(status):
     dynamodb.send_status(status)
 
     return status
-  except:    
+  except:
     print(sys.exc_info()[0])
     print(sys.exc_info()[1])
     return None
@@ -154,6 +167,40 @@ def testStatus():
     testStatus = loaded_data[0].testStatus
 
     return testStatus
+  except:
+    print(sys.exc_info()[0])
+    print(sys.exc_info()[1])
+    return None
+
+@app.route("/api/addTestDevice", methods=['GET', 'POST'])
+def addTestDevice():
+  try:
+    data = jsonc.data_to_json(dynamodb.get_deviceCount())
+    loaded_data = jsonc.json.loads(data)
+
+    deviceCountStr = loaded_data[0]['deviceCount']
+    deviceCount = int(deviceCountStr)
+    deviceCount += 1
+
+    dynamodb.send_deviceCount(deviceCount)
+    return deviceCount
+  except:
+    print(sys.exc_info()[0])
+    print(sys.exc_info()[1])
+    return None
+
+@app.route("/api/deleteTestDevice", methods=['GET', 'POST'])
+def deleteTestDevice():
+  try:
+    data = jsonc.data_to_json(dynamodb.get_deviceCount())
+    loaded_data = jsonc.json.loads(data)
+
+    deviceCountStr = loaded_data[0]['deviceCount']
+    deviceCount = int(deviceCountStr)
+    deviceCount -= 1
+
+    dynamodb.send_deviceCount(deviceCount)
+    return deviceCount
   except:
     print(sys.exc_info()[0])
     print(sys.exc_info()[1])

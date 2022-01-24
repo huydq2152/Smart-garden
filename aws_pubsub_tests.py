@@ -3,13 +3,18 @@ from time import sleep
 import random
 import json
 import datetime as datetime
+import jsonconverter as jsonc
+
+import dynamodb
+
 
 def customCallback(client, userdata, message):
-	print("Received a new message: ")
-	print(message.payload)
-	print("from topic: ")
-	print(message.topic)
-	print("--------------\n\n")
+    print("Received a new message: ")
+    print(message.payload)
+    print("from topic: ")
+    print(message.topic)
+    print("--------------\n\n")
+
 
 host = "a290uc2ksy4m1j-ats.iot.us-west-2.amazonaws.com"
 
@@ -30,26 +35,25 @@ my_rpi.configureMQTTOperationTimeout(5)  # 5 sec
 my_rpi.connect()
 my_rpi.subscribe("smartgarden/tests", 1, customCallback)
 
-# Publish to the same topic in a loop forever
+# publish data
+data = jsonc.data_to_json(dynamodb.get_deviceCount())
+loaded_data = jsonc.json.loads(data)
+
+deviceCountStr = loaded_data[0]['deviceCount']
+deviceCount = int(deviceCountStr)
 while True:
-	sleep(4)
-	test1 = random.randint(1, 10)
-	test2 = random.randint(1, 10)
-	test3 = random.randint(1, 10)
-	test4 = random.randint(1, 10)
-	test5 = random.randint(1, 10)
-	test6 = random.randint(1, 10)
+    sleep(4)
 
-	message = {}
-	message["id"] = "id_smartgarden"
+    message = {}
+    message["id"] = "id_smartgarden"
 
-	now = datetime.datetime.now()
-	message["datetimeid"] = now.isoformat()
-	message["test1"] = test1
-	message["test2"] = test2
-	message["test3"] = test3
-	message["test4"] = test4
-	message["test5"] = test5
-	message["test6"] = test6
+    now = datetime.datetime.now()
+    message["datetimeid"] = now.isoformat()
 
-	my_rpi.publish("smartgarden/tests", json.dumps(message), 1)
+    i = 1
+    while i <= deviceCount:
+        test = random.randint(1, 10)
+        message[f'test{i}'] = test
+        i += 1
+
+    my_rpi.publish("smartgarden/tests", json.dumps(message), 1)
