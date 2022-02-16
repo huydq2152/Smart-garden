@@ -6,6 +6,9 @@ const runTestSwitch = document.getElementById("runTest");
 const addTestDeviceBtn = $('#addTestDeviceBtn');
 addTestDeviceBtn.click(function () {
     addTestDevice();
+    setTimeout(function() {
+        location.reload();
+    }, 3000);
 })
 
 function addTestDevice() {
@@ -17,6 +20,9 @@ function addTestDevice() {
 const deleteTestDeviceBtn = $('#deleteTestDeviceBtn');
 deleteTestDeviceBtn.click(function () {
     deleteTestDevice();
+    setTimeout(function() {
+        location.reload();
+    }, 3000);
 })
 
 function deleteTestDevice() {
