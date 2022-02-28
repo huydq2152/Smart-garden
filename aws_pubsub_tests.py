@@ -3,6 +3,9 @@ from time import sleep
 import random
 import json
 import datetime as datetime
+
+from flask import jsonify
+
 import jsonconverter as jsonc
 
 import dynamodb
@@ -35,25 +38,33 @@ my_rpi.configureMQTTOperationTimeout(5)  # 5 sec
 my_rpi.connect()
 my_rpi.subscribe("smartgarden/tests", 1, customCallback)
 
-# publish data
-data = jsonc.data_to_json(dynamodb.get_deviceCount())
-loaded_data = jsonc.json.loads(data)
+message = {}
 
-deviceCountStr = loaded_data[0]['deviceCount']
-deviceCount = int(deviceCountStr)
 while True:
     sleep(4)
 
-    message = {}
-    message["id"] = "id_smartgarden"
+    testData = jsonc.data_to_json(dynamodb.get_testStatus())
+    testStatus_loaded_data = jsonc.json.loads(testData)
 
-    now = datetime.datetime.now()
-    message["datetimeid"] = now.isoformat()
+    testStatus = testStatus_loaded_data[0]['testStatus']
 
-    i = 1
-    while i <= deviceCount:
-        test = random.randint(1, 10)
-        message[f'test{i}'] = test
-        i += 1
+    if testStatus == 'Y':
+        # publish data
+        data = jsonc.data_to_json(dynamodb.get_deviceCount())
+        loaded_data = jsonc.json.loads(data)
 
-    my_rpi.publish("smartgarden/tests", json.dumps(message), 1)
+        deviceCountStr = loaded_data[0]['deviceCount']
+        deviceCount = int(deviceCountStr)
+
+        message["id"] = "id_smartgarden"
+
+        now = datetime.datetime.now()
+        message["datetimeid"] = now.isoformat()
+
+        i = 1
+        while i < deviceCount:
+            test = random.randint(1, 10)
+            message[f'test{i}'] = test
+            i += 1
+
+        my_rpi.publish("smartgarden/tests", json.dumps(message), 1)

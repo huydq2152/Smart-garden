@@ -2,9 +2,47 @@
 {% block content %}
     <div class="content">
         <div class="container-fluid">
-            <div class="row" style="margin-bottom: 30px;padding-left: 15px;">
-                <button id="addTestDeviceBtn" type="button" class="btn btn-primary">Thêm thiết bị</button>
-                <button id="deleteTestDeviceBtn" type="button" class="btn btn-primary">Xóa thiết bị</button>
+            <div class="row">
+                <div class="col-md-4">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Chạy mô phỏng</h4>
+          </div>
+          <div class="content">
+            <center>
+              <label class="toggleBtn">
+                <input class="switch-input switch2-input" id="runTest" type="checkbox" onclick="runTest()" />
+                <span class="switch-label switch2-label" data-on="on" data-off="off"></span>
+                <span class="switch-handle switch2-handle"></span>
+              </label>
+            </center>
+          </div>
+        </div>
+      </div>
+                <div class="col-md-4">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Thêm thiết bị</h4>
+          </div>
+          <div class="content">
+            <center>
+              <button id="addTestDeviceBtn" type="button" class="btn btn-primary">Thêm thiết bị</button>
+            </center>
+          </div>
+        </div>
+      </div>
+                <div class="col-md-4">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Xóa thiết bị</h4>
+          </div>
+          <div class="content">
+            <center>
+              <button id="deleteTestDeviceBtn" type="button" class="btn btn-primary">Xóa thiết bị</button>
+            </center>
+          </div>
+        </div>
+      </div>
             </div>
             <div class="row">
                 {% for i in range(1, deviceCount) %}

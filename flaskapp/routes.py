@@ -138,7 +138,7 @@ def runTest(run):
   if run == 'Y':
     try:
       dynamodb.send_testStatus(run)
-      scripts.runTest()
+      # scripts.runTest()
 
       return run
     except:
@@ -148,7 +148,7 @@ def runTest(run):
   elif run == 'N':
     try:
       dynamodb.send_testStatus(run)
-      scripts.endTest()
+      # scripts.endTest()
 
       return run
     except:
